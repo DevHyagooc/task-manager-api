@@ -1,0 +1,52 @@
+from app.schemas.task_schema import TaskCreate, TaskUpdate
+
+tasks = []
+next_id = 1
+
+def createTask(task_data: TaskCreate):
+    global next_id
+
+    new_task = {
+        "id": next_id,
+        "title": task_data.title,
+        "description": task_data.description,
+        "priority": task_data.priority,
+        "status": task_data.status,
+    }
+
+    tasks.append(new_task)
+    next_id += 1
+
+    return new_task
+
+def list_tasks():
+    return tasks
+
+def get_task_by_id(task_id: int):
+    for task in tasks:
+        if task["id"] == task_id:
+            return task
+        
+    return None
+
+def update_task(task_id: int, task_data: TaskUpdate):
+    task = get_task_by_id(task_id)
+
+    if task is None:
+        return None
+    
+    update_data = task_data.model_dump(exclude_unset=True)
+
+    for field, value in update_data.items():
+        task[field] = value
+    
+    return task
+
+def delete_task(task_id: int):
+    task = get_task_by_id(task_id)
+
+    if task is None:
+        return False
+    
+    tasks.remove(task)
+    return True

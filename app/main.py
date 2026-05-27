@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from app.routers.task_router import router as tasks_router
 
 app = FastAPI(
     title="Task Manager API",
@@ -6,14 +7,4 @@ app = FastAPI(
     version="1.0.0"
 )
 
-@app.get("/")
-def root():
-    return {
-        "message": "Task Manager API está rodando"
-    }
-
-@app.get("/health")
-def root():
-    return {
-        "status": "ok"
-    }
+app.include_router(tasks_router)
