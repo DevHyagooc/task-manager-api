@@ -3,7 +3,7 @@ from app.schemas.task_schema import TaskCreate, TaskUpdate
 tasks = []
 next_id = 1
 
-def createTask(task_data: TaskCreate):
+def create_task(task_data: TaskCreate):
     global next_id
 
     new_task = {
