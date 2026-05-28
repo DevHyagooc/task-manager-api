@@ -1,17 +1,19 @@
 from typing import Optional, Literal
 from pydantic import BaseModel
 
+TaskPriority = Literal["low", "medium", "high"]
+TaskStatus = Literal["pending", "in_progress", "done"]
 class TaskCreate(BaseModel):
     title: str
     description: Optional[str] = None
-    priority: Literal["low", "medium", "high"] = "medium"
-    status: Literal["pending", "in_progress", "done"] = "pending"
+    priority: TaskPriority = "medium"
+    status: TaskStatus = "pending"
 
 class TaskUpdate(BaseModel):
     title: Optional[str] = None
     description: Optional[str] = None
-    priority: Optional[Literal["low", "medium", "high"]] = None
-    status: Optional[Literal["pending", "in_progress", "done"]] = None
+    priority: Optional[TaskPriority] = None
+    status: Optional[TaskStatus] = None
 
 class TaskResponse(BaseModel):
     id: int
