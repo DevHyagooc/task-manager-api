@@ -19,8 +19,22 @@ def createTask(task_data: TaskCreate):
 
     return new_task
 
-def list_tasks():
-    return tasks
+def list_tasks(status: str | None = None, priority: str | None = None):
+    filtered_tasks = tasks
+
+    if status:
+        filtered_tasks = [
+            task for task in filtered_tasks
+            if task["status"] == status
+        ]
+    
+    if priority:
+        filtered_tasks = [
+            task for task in filtered_tasks
+            if task["priority"] == priority
+        ]
+
+    return filtered_tasks
 
 def get_task_by_id(task_id: int):
     for task in tasks:

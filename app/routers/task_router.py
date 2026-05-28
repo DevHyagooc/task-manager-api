@@ -12,8 +12,8 @@ def create(task_data: TaskCreate):
     return createTask(task_data)
 
 @router.get("/", response_model=list[TaskResponse])
-def list_all():
-    return list_tasks()
+def list_all(status: str | None = None, priority: str | None = None):
+    return list_tasks(status=status, priority=priority)
 
 @router.get("/{task_id}", response_model=TaskResponse)
 def get_by_id(task_id: int):
