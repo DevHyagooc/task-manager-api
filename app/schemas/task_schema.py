@@ -21,3 +21,13 @@ class TaskResponse(BaseModel):
     description: Optional[str]
     priority: str
     status: str
+
+class TaskListMeta(BaseModel):
+    page: int
+    limit: int
+    total: int
+    total_pages: int
+
+class TaskListResponse(BaseModel):
+    data: list[TaskResponse]
+    meta: TaskListMeta

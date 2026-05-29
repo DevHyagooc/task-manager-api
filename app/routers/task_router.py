@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from app.schemas.task_schema import TaskCreate, TaskResponse, TaskUpdate, TaskPriority, TaskStatus
+from app.schemas.task_schema import TaskCreate, TaskResponse, TaskListResponse, TaskUpdate, TaskPriority, TaskStatus
 from app.services.task_service import create_task, list_tasks, get_task_by_id, update_task, delete_task
 
 router = APIRouter(
@@ -11,7 +11,7 @@ router = APIRouter(
 def create(task_data: TaskCreate):
     return create_task(task_data)
 
-@router.get("/", response_model=list[TaskResponse])
+@router.get("/", response_model=TaskListResponse)
 def list_all(
     status: TaskStatus | None = None, 
     priority: TaskPriority | None = None,

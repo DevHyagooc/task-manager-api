@@ -1,3 +1,4 @@
+import math
 from app.schemas.task_schema import TaskCreate, TaskUpdate
 
 tasks = []
@@ -39,10 +40,23 @@ def list_tasks(
             if task["priority"] == priority
         ]
 
+    total = len(filtered_tasks)
+    total_pages = math.ceil(total / limit) if total > 0 else 0
+
     start = (page - 1) * limit
     end = start + limit
 
-    return filtered_tasks[start:end]
+    paginated_tasks = filtered_tasks[start:end]
+
+    return {
+        "data": paginated_tasks,
+        "meta": {
+            "page": page,
+            "limit": limit,
+            "total": total,
+            "total_pages": total_pages
+        }
+    }
 
 def get_task_by_id(task_id: int):
     for task in tasks:
