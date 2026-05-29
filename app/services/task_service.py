@@ -19,7 +19,12 @@ def create_task(task_data: TaskCreate):
 
     return new_task
 
-def list_tasks(status: str | None = None, priority: str | None = None):
+def list_tasks(
+        status: str | None = None, 
+        priority: str | None = None,
+        page: int = 1,
+        limit: int = 10,
+):
     filtered_tasks = tasks
 
     if status:
@@ -34,7 +39,10 @@ def list_tasks(status: str | None = None, priority: str | None = None):
             if task["priority"] == priority
         ]
 
-    return filtered_tasks
+    start = (page - 1) * limit
+    end = start + limit
+
+    return filtered_tasks[start:end]
 
 def get_task_by_id(task_id: int):
     for task in tasks:
