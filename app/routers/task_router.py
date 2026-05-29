@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Query
 from app.schemas.task_schema import TaskCreate, TaskResponse, TaskListResponse, TaskUpdate, TaskPriority, TaskStatus
 from app.services.task_service import create_task, list_tasks, get_task_by_id, update_task, delete_task
 
@@ -15,8 +15,8 @@ def create(task_data: TaskCreate):
 def list_all(
     status: TaskStatus | None = None, 
     priority: TaskPriority | None = None,
-    page: int = 1,
-    limit: int = 10
+    page: int = Query(default=1, ge=1),
+    limit: int = Query(default=10, ge=1, le=100)
 ):
     return list_tasks(
         status=status, 
